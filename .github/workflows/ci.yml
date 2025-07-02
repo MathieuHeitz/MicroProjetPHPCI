@@ -4,9 +4,9 @@ name: PHP Quality Assurance
 # Déclencheurs : Quand ce workflow doit-il s'exécuter ?
 on:
   push:
-    branches: ["main"]    # À chaque `git push` sur la branche `main`.
+    branches: ["master"]    # À chaque `git push` sur la branche `main`.
   pull_request:
-    branches: ["main"]    # À chaque création/mise à jour d'une Pull Request vers `main`.
+    branches: ["master"]    # À chaque création/mise à jour d'une Pull Request vers `main`.
 
 # Jobs : Les tâches à effectuer. Un workflow peut avoir plusieurs jobs.
 jobs:
