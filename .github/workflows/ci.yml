@@ -55,7 +55,7 @@ jobs:
 
     # Condition 2: Déclenchement conditionnel
     # Ce job s'exécute uniquement pour un push sur la branche 'main'.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
 
     runs-on: ubuntu-latest
 
