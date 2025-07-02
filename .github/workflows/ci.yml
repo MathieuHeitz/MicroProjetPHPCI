@@ -2,13 +2,16 @@ name: PHP Quality Assurance
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - "**"   
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - "**"  
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -18,7 +21,7 @@ jobs:
         with:
           php-version: '8.2'
           tools: composer:v2
-          coverage: xdebug  # Active Xdebug pour la couverture
+          coverage: xdebug
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
@@ -29,44 +32,35 @@ jobs:
       - name: Run Static Analysis
         run: composer analyse
 
-      - name: Fix permissions on phpunit
-        run: chmod +x vendor/bin/phpunit
-
-      - name: Run Tests (PHPUnit)
+      - name: Run tests
         run: composer test
 
-      - name: Generate and Upload Coverage Report
-        env:
-          XDEBUG_MODE: coverage
-        run: |
-          # Exécuter phpunit avec génération de la couverture HTML
-          vendor/bin/phpunit --coverage-html build/coverage
+      - name: Fix permissions on phpunit
+        run: chmod +x vendor/bin/phpunit 
+
+      - name: Generate HTML Coverage Report
+        run: vendor/bin/phpunit --coverage-html build/coverage
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage-report   # Nom de l'archive .zip créée
-          path: build/coverage/        # Dossier à sauvegarder
+          name: code-coverage-report   
+          path: build/coverage/
 
   deploy:
-    # Condition 1: Dépendance
-    # Ce job démarre uniquement si le job 'build' a réussi.
-    needs: build
-
-    # Condition 2: Déclenchement conditionnel
-    # Ce job s'exécute uniquement pour un push sur la branche 'main'.
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-
+    needs: build  
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-
     steps:
-      - name: Simuler le déploiement en production
+      - name: Simulate deployment
         run: |
-          echo "Déploiement sur le serveur de production..."
-          echo "Connexion via SSH..."
+          echo "==================================="
+          echo " Déploiement en production..."
+          echo "Connexion au serveur..."
           sleep 2
-          echo "Pull du code depuis le dépôt Git..."
+          echo "Pull du code..."
           sleep 2
-          echo "Lancement des migrations de base de données..."
-          sleep 3
-          echo "Déploiement terminé avec succès !"
+          echo "Migration de la base..."
+          sleep 2
+          echo " Déploiement terminé avec succès !"
+          echo "==================================="
