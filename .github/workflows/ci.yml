@@ -18,7 +18,7 @@ jobs:
         with:
           php-version: '8.2'
           tools: composer:v2
-          coverage: xdebug  # <-- ON active Xdebug pour la couverture
+          coverage: xdebug  # Active Xdebug pour la couverture
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
@@ -29,12 +29,9 @@ jobs:
       - name: Run Static Analysis
         run: composer analyse
 
-      # --- NOUVELLES ÉTAPES CI-DESSOUS ---
-
-
       - name: Fix permissions on phpunit
         run: chmod +x vendor/bin/phpunit
-        
+
       - name: Run Tests (PHPUnit)
         run: composer test
 
@@ -42,11 +39,34 @@ jobs:
         env:
           XDEBUG_MODE: coverage
         run: |
-          # On exécute phpunit avec l'option de couverture HTML
+          # Exécuter phpunit avec génération de la couverture HTML
           vendor/bin/phpunit --coverage-html build/coverage
 
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: code-coverage-report  # Nom de l'archive .zip créée
-          path: build/coverage/       # Dossier à sauvegarder
+          name: code-coverage-report   # Nom de l'archive .zip créée
+          path: build/coverage/        # Dossier à sauvegarder
+
+  deploy:
+    # Condition 1: Dépendance
+    # Ce job démarre uniquement si le job 'build' a réussi.
+    needs: build
+
+    # Condition 2: Déclenchement conditionnel
+    # Ce job s'exécute uniquement pour un push sur la branche 'main'.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Simuler le déploiement en production
+        run: |
+          echo "Déploiement sur le serveur de production..."
+          echo "Connexion via SSH..."
+          sleep 2
+          echo "Pull du code depuis le dépôt Git..."
+          sleep 2
+          echo "Lancement des migrations de base de données..."
+          sleep 3
+          echo "Déploiement terminé avec succès !"
