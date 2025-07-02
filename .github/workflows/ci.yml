@@ -21,10 +21,25 @@ jobs:
         with:
           php-version: '8.2'
           tools: composer:v2
+          coverage: xdebug
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Run All check
-        run: composer check
+      - name: Run Linter
+        run: composer lint
 
+      - name: Run Static Analysis
+        run: composer analyse
+
+      - name: Run tests
+        run: composer test
+
+      - name: Generate HTML Coverage Report
+        run: vendor/bin/phpunit --coverage-html build/coverage
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-coverage-report   
+          path: build/coverage/      
