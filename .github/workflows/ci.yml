@@ -31,6 +31,10 @@ jobs:
 
       # --- NOUVELLES ÉTAPES CI-DESSOUS ---
 
+
+      - name: Fix permissions on phpunit
+        run: chmod +x vendor/bin/phpunit
+        
       - name: Run Tests (PHPUnit)
         run: composer test
 
