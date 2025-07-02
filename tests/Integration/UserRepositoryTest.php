@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Integration;
 
 use PHPUnit\Framework\TestCase;
@@ -14,15 +15,15 @@ class UserRepositoryTest extends TestCase
     {
         $dsn = getenv('DB_DSN') ?: 'sqlite::memory:';
         var_dump($dsn);
-    
+
         try {
             $this->pdo = new \PDO($dsn);
             $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch (\Throwable $e) {
             echo "PDO connection failed: ", $e->getMessage(), PHP_EOL;
-            exit(1); 
+            exit(1);
         }
-    
+
         $this->pdo->exec("
             CREATE TABLE users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,12 +31,12 @@ class UserRepositoryTest extends TestCase
                 email TEXT NOT NULL
             )
         ");
-    
+
         $this->repository = new UserRepository($this->pdo);
     }
-    
-    
-    
+
+
+
 
     protected function tearDown(): void
     {

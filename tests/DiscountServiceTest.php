@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -12,7 +13,7 @@ class DiscountServiceTest extends TestCase
 
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Percentage must be between 0 and 100.');
-        
+
         $service->applyDiscount(100, -10);
     }
 
@@ -23,7 +24,7 @@ class DiscountServiceTest extends TestCase
         $expectedDiscount = 80;
 
         $actualDiscount = $service->applyDiscount(100, 20);
-        
+
         $this->assertEquals($expectedDiscount, $actualDiscount);
     }
 }

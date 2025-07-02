@@ -1,4 +1,5 @@
 <?php
+
 namespace App;
 
 use PHPUnit\Framework\TestCase;
@@ -20,18 +21,18 @@ class PasswordStrengthCalculatorTest extends TestCase
         return [
             ['', 0],
 
-            ['faible', 2],  
+            ['faible', 2],
 
-            ['moyennnn', 4],          
-  
-            ['Fort%otdePasse68!', 10], 
- 
-            ['12345678', 4],   
+            ['moyennnn', 4],
 
-            ['ABCDEFGH', 4],               
-    
-            ['!+-//=)àç_çè_', 4],                
-    
+            ['Fort%otdePasse68!', 10],
+
+            ['12345678', 4],
+
+            ['ABCDEFGH', 4],
+
+            ['!+-//=)àç_çè_', 4],
+
 
         ];
     }

@@ -4,7 +4,6 @@ namespace App;
 
 class PasswordStrengthCalculator
 {
-
     public function calculate(string $password): int
     {
 

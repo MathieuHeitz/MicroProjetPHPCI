@@ -1,4 +1,5 @@
 <?php
+
 namespace App\repository;
 
 use App\models\UserForRepoTest;
@@ -36,7 +37,9 @@ class UserRepository
         $stmt = $this->pdo->prepare("SELECT id, name, email FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if (!$row) return null;
+        if (!$row) {
+            return null;
+        }
 
         return new UserForRepoTest($row['name'], $row['email'], (int)$row['id']);
     }
