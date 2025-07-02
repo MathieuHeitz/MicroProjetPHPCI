@@ -42,7 +42,7 @@ jobs:
           vendor/bin/phpunit --coverage-html build/coverage
 
       - name: Upload coverage artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report  # Nom de l'archive .zip créée
           path: build/coverage/       # Dossier à sauvegarder
