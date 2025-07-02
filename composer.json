@@ -2,7 +2,7 @@
 "scripts": {
     "lint": "php vendor/bin/php-cs-fixer fix --dry-run",
     "analyse": "php vendor/bin/phpstan analyse",
-    "test": "phpunit"
+    "test": "vendor/bin/phpunit"
 },
 
     "name": "atelier/phpunit-dataprovider",
